@@ -16,19 +16,19 @@ import javax.persistence.Table;
 @Data
 @Entity
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer telegramChatId;
+    private Long telegramChatId;
     private String name;
     private String surname;
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public User(String name, String surname, Status status, Integer telegramChatId) {
+    public User(String name, String surname, Status status, Long telegramChatId) {
         this.name = name;
         this.surname = surname;
         this.status = status;

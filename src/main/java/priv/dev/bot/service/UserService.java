@@ -2,6 +2,8 @@ package priv.dev.bot.service;
 
 import priv.dev.bot.model.Status;
 
+import java.util.Optional;
+
 public interface UserService {
-    Status getUserStatus(Integer chatId);
+    Optional<Status> getUserStatus(Long telegramChatId);
 }

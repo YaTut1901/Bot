@@ -1,29 +1,30 @@
 package priv.dev.bot.utils;
 
 import org.springframework.stereotype.Component;
-import priv.dev.bot.controllers.Controller;
+import priv.dev.bot.controllers.MessageController;
 import priv.dev.bot.model.Status;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class ControllerStorage {
-    private static Map<Status, Controller> map;
+    private final Map<Status, Class> map;
 
-    public ControllerStorage(Map<Status, Controller> map) {
-        this.map = map;
+    public ControllerStorage() {
+        this.map = new HashMap<>();
     }
 
-    public static void init() {
+    @PostConstruct
+    public void init() {
         List<Class> classes = null;
         try {
             classes = getClasses("priv.dev.bot.controllers");
@@ -34,26 +35,21 @@ public class ControllerStorage {
         }
         for (Class clazz : classes) {
             try {
-                map.put((Status) clazz.getField("TAG").get(null), (Controller) clazz.getConstructor().newInstance());
+                Status status = (Status) clazz.getField("STATUS").get(null);
+                map.put(status, clazz);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static Controller getController(Status status) {
+    public Class getController(Status status) {
         return map.get(status);
     }
 
-    private static List<Class> getClasses(String packageName)
+    private List<Class> getClasses(String packageName)
             throws IOException, ClassNotFoundException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         if (classLoader == null) {
@@ -73,11 +69,11 @@ public class ControllerStorage {
         return filterControllers(classes);
     }
 
-    private static List<Class> filterControllers(List<Class> classes) {
-        return classes.stream().filter(clazz -> clazz.getSuperclass().equals(Controller.class)).collect(Collectors.toList());
+    private List<Class> filterControllers(List<Class> classes) {
+        return classes.stream().filter(clazz -> clazz.getSuperclass().equals(MessageController.class)).collect(Collectors.toList());
     }
 
-    private static List<Class> findClasses(File directory, String packageName)
+    private List<Class> findClasses(File directory, String packageName)
             throws ClassNotFoundException {
         List<Class> classes = new ArrayList<>();
         if (!directory.exists()) {

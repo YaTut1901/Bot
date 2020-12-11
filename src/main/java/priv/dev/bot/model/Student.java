@@ -26,7 +26,7 @@ public class Student extends User {
                    String engLevel,
                    LocalDateTime nextSession,
                    Teacher teacher,
-                   Status status, Integer telegramChatId) {
+                   Status status, Long telegramChatId) {
         super(name, surname, status, telegramChatId);
         this.curTopic = curTopic;
         this.engLevel = engLevel;

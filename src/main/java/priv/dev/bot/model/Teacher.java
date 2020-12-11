@@ -17,7 +17,7 @@ public class Teacher extends User {
     @OneToMany
     private List<Student> students;
 
-    public Teacher(String name, String surname, Status status, Integer telegramChatId) {
+    public Teacher(String name, String surname, Status status, Long telegramChatId) {
         super(name, surname, status, telegramChatId);
         students = new ArrayList<>();
     }

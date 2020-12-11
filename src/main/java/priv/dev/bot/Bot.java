@@ -1,20 +1,26 @@
 package priv.dev.bot;
 
+import lombok.Setter;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import priv.dev.bot.controllers.Controller;
-import priv.dev.bot.utils.ControllerStorage;
-
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.BotSession;
+import org.telegram.telegrambots.starter.AfterBotRegistration;
+import priv.dev.bot.controllers.ResponseFormer;
 
 public class Bot extends TelegramLongPollingBot {
-
-    public Bot() {
-        ControllerStorage.init();
-    }
+    @Setter
+    private ResponseFormer former;
 
     @Override
     public void onUpdateReceived(Update update) {
-//        Controller controller = ControllerStorage.getController(update.getMessage().getChatId())
+        BotApiMethod response = former.form(update);
+        try {
+            execute(response);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -25,5 +31,10 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return "1412175488:AAGBIH5nOclL1f1KrlJBfECrlZPPO20S7qk";
+    }
+
+    @AfterBotRegistration
+    public void stopSession(BotSession session) {
+        session.stop();
     }
 }
