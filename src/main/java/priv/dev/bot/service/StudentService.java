@@ -4,4 +4,6 @@ import priv.dev.bot.model.Student;
 
 public interface StudentService {
     Student save(Student student);
+
+    Student getByTelegramChatId(Long chatId);
 }

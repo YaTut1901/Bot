@@ -1,11 +1,10 @@
-package priv.dev.bot.controllers;
+package priv.dev.bot.controllers.formers;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import priv.dev.bot.controllers.MessageController;
 import priv.dev.bot.model.Status;
 import priv.dev.bot.model.Student;
 import priv.dev.bot.service.StudentService;
@@ -37,9 +36,9 @@ public class ResponseFormer {
         if (optionalStatus.isEmpty()) {
             Student student = new Student();
             student.setTelegramChatId(chatId);
-            student.setStatus(Status.STUDENT_REGISTRATION);
+            student.setStatus(Status.NEWCOMER_MESSAGE);
             studentService.save(student);
-            status = Status.STUDENT_REGISTRATION;
+            status = Status.NEWCOMER_MESSAGE;
         } else {
             status = optionalStatus.get();
         }

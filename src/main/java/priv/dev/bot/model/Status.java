@@ -1,6 +1,7 @@
 package priv.dev.bot.model;
 
 public enum Status {
+    NEWCOMER_MESSAGE,
     STUDENT_REGISTRATION,
-    FREE
+    STUDENT_MAIN_MENU
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import priv.dev.bot.Bot;
-import priv.dev.bot.controllers.ResponseFormer;
+import priv.dev.bot.controllers.formers.ResponseFormer;
 
 @Configuration
 public class BotConfig {

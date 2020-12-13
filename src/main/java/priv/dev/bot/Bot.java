@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotSession;
 import org.telegram.telegrambots.starter.AfterBotRegistration;
-import priv.dev.bot.controllers.ResponseFormer;
+import priv.dev.bot.controllers.formers.ResponseFormer;
 
 public class Bot extends TelegramLongPollingBot {
     @Setter

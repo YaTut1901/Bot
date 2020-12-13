@@ -1,6 +1,5 @@
 package priv.dev.bot.model;
 
-import ch.qos.logback.classic.util.StatusViaSLF4JLoggerFactory;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
